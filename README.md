@@ -9,7 +9,7 @@ Up, Down, Left, Right Arrow Keys to Walk
 Space Bar to Jump
 Change the MoonCat # to see a different MoonCat
 
-[Live Demo](https://sudoWright.github.io/mooncatrescue-walkcycles/index.html)
+[Live Demo](https://mooncats.sudojames.com/)
 
 ## Import Module
 
