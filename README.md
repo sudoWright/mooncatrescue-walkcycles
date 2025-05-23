@@ -9,7 +9,7 @@ Up, Down, Left, Right Arrow Keys to Walk
 Space Bar to Jump
 Change the MoonCat # to see a different MoonCat
 
-[Live Demo](https://mooncats.astromass.com/)
+[Live Demo](https://mooncats.sudojames.xyz/)
 
 ## Import Module
 
@@ -60,11 +60,15 @@ animation.style.backgroundPosition = `-${x}px -${y}px`;
 animation.style.backgroundImage = "url('"+spriteSheet+"')";
 ```
 
-## Sprite Sheet for MoonCat TokenId=0
+## Sprite Sheet for MoonCat TokenId=13872
 
-[OpenSea MoonCat 0](https://opensea.io/assets/0xc3f733ca98e0dad0386979eb96fb1722a1a05e69/0)
+[OpenSea MoonCat 13872](https://opensea.io/item/ethereum/0xc3f733ca98e0dad0386979eb96fb1722a1a05e69/13872)
 
-![0.png](/images/0.png?raw=true "0.png")
+
+
+![image](https://github.com/user-attachments/assets/82ffebdb-b47e-4206-b7a6-09f020716163)
+
+
 
 -----
 
