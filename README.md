@@ -1,13 +1,13 @@
 # mooncatrescue-walkcycles
 
 ## Based on code originally created by Ponderware
-[Ponderware MoonCatParser](https://github.com/ponderware/mooncatparser)
+[Ponderware MoonCatParser](https://github.com/sudoWright/mooncatparser)
 
-## Demo
+## Cat Walking Demo in Browser
 
 Up, Down, Left, Right Arrow Keys to Walk
 Space Bar to Jump
-Change the MoonCat # to see a different MoonCat
+**Change the MoonCat #** to see a different MoonCat
 
 [Live Demo](https://mooncats.sudojames.xyz/)
 
@@ -74,6 +74,8 @@ animation.style.backgroundImage = "url('"+spriteSheet+"')";
 
 ## License
 
+MoonCat​Rescue ChainStation (https://chainstation.mooncatrescue.com/team/contribute#skills)
+
 Copyright © 2017 ponderware ltd.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -81,7 +83,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 Except with the prior written authorization from ponderware ltd., any modifications made to the Software shall not be represented, promoted, or sold as the official or canonical Software or property of MoonCatRescue or ponderware ltd., and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Special thanks to 'vinny-888.github.io' for providing these walk-cycles.
-
-MoonCat​Rescue ChainStation (https://chainstation.mooncatrescue.com/team/contribute#skills)
