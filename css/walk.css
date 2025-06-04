@@ -9,7 +9,7 @@ body{
     background-image: url("../images/moon.png");
 }
 
-.animation{
+#animation{
     position: absolute;
     top: 0px;
     left: 0px;

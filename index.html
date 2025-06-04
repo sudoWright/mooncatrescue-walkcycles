@@ -11,14 +11,13 @@
 			<img id="sprite_sheet" src="" class=""></img>
 		</div>
 		<br>
-            <span style="color: #fff;">MoonCat #:</span>
-            <input id="newMooncatID" type="number" value="13872">
-            <button id="addCatBtn" onclick="updateSpriteSheet()">Add Cat</button>
-            <ul id="catList" style="color:#fff;"></ul>
-                <br>
+		<span style="color: #fff;">MoonCat #:</span> <input id="mooncatID" onchange="updateSpriteSheet()" type="number" value="13872">
+		<br>
 
-                <div id="world">
-                </div>
-        </div>
+		<div id="world">
+			<div id="animation">
+			</div>
+		</div>
+	</div>
 </body>
 </html>
