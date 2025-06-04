@@ -2,157 +2,126 @@ import {MoonCatWalk} from './mooncatWalk.js?v=2';
 
 export const generator = (function () {
 window.onload = function() {
-    const cats = [];
-
-    class Cat {
-        constructor(tokenId, controlScheme='arrows'){
-            this.tokenId = tokenId;
-            this.controlScheme = controlScheme;
-            this.spriteSheet = MoonCatWalk.generateMoonCatSpriteSheet(tokenId, 1);
-            this.element = document.createElement('div');
-            this.element.className = 'animation';
-            this.element.style.backgroundImage = "url('" + this.spriteSheet + "')";
-            document.getElementById('world').appendChild(this.element);
-
-            this.walkIndex = 0;
-            this.maxFrames = 8;
-            this.offsetX = 100;
-            this.offsetY = 100;
-            this.direction = 6; // idle down
-            this.jumping = false;
-            this.jumpLength = 12;
-            this.jumpCount = 0;
-            this.jumpInc = 2;
-            this.speed = 2;
-            this.bounds = {xMin:-3,xMax:172,yMin:85,yMax:118};
-        }
-
-        step(){
-            const x = this.walkIndex * 32;
-            const y = this.direction * 32;
-            if(this.direction === 0){
-                this.offsetX += this.speed;
-            } else if(this.direction === 1){
-                this.offsetY -= this.speed;
-            } else if(this.direction === 2){
-                this.offsetY += this.speed;
-            } else if(this.direction === 3){
-                this.offsetX -= this.speed;
-            }
-            if(this.offsetX < this.bounds.xMin){
-                this.offsetX = this.bounds.xMin;
-            } else if(this.offsetX > this.bounds.xMax){
-                this.offsetX = this.bounds.xMax;
-            } else if(this.offsetY < this.bounds.yMin){
-                this.offsetY = this.bounds.yMin;
-            } else if(this.offsetY > this.bounds.yMax){
-                this.offsetY = this.bounds.yMax;
-            }
-            if(this.jumping){
-                if(this.jumpCount > this.jumpLength){
-                    this.jumpInc = -2;
-                }
-                this.jumpCount += this.jumpInc;
-                if(this.jumpCount === 0){
-                    this.jumping = false;
-                    this.jumpInc = 2;
-                }
-            }
-            this.element.style.backgroundPosition = `-${x}px -${y}px`;
-            this.element.style.left = this.offsetX + 'px';
-            this.element.style.top = (this.offsetY - this.jumpCount) + 'px';
-            this.walkIndex++;
-            if(this.walkIndex >= this.maxFrames){
-                this.walkIndex = 0;
-            }
-        }
-
-        handleKeyDown(key){
-            if(this.controlScheme === 'arrows'){
-                if(key === 39){ this.direction = 0; }
-                else if(key === 38){ this.direction = 1; }
-                else if(key === 40){ this.direction = 2; }
-                else if(key === 37){ this.direction = 3; }
-                else if(key === 32){ this.jumping = true; }
-            } else if(this.controlScheme === 'wasd'){
-                if(key === 68){ this.direction = 0; }
-                else if(key === 87){ this.direction = 1; }
-                else if(key === 83){ this.direction = 2; }
-                else if(key === 65){ this.direction = 3; }
-                else if(key === 70){ this.jumping = true; }
-            } else {
-                if([37,38,39,40].includes(key)){
-                    this.direction = Math.floor(Math.random()*4);
-                }
-                if(key === 32){ this.jumping = true; }
-            }
-        }
-
-        handleKeyUp(key){
-            if(this.controlScheme === 'arrows'){
-                if(key === 39){ this.direction = 4; }
-                else if(key === 38){ this.direction = 5; }
-                else if(key === 40){ this.direction = 6; }
-                else if(key === 37){ this.direction = 7; }
-            } else if(this.controlScheme === 'wasd'){
-                const map = {68:4,87:5,83:6,65:7};
-                if(map[key] !== undefined){ this.direction = map[key]; }
-            } else {
-                if([37,38,39,40].includes(key)){
-                    this.direction = 4 + Math.floor(Math.random()*4);
-                }
-            }
-        }
-
-        remove(){
-            this.element.remove();
-        }
+    let spriteSheet = null;
+    let offsetX = 100;
+    let offsetY = 100;
+    let direction = 6;
+    let jumping = false;
+    let jumpLength = 12;
+    let jumpCount = 0;
+    let jumpInc = 2;
+    let speed = 2;
+    let bounds = {
+        xMin: -3,
+        xMax: 172,
+        yMin: 85,
+        yMax: 118
     }
-
-    function addCat(tokenId){
-        const scheme = cats.length === 0 ? 'arrows' :
-                       cats.length === 1 ? 'wasd' : 'random';
-        const cat = new Cat(tokenId, scheme);
-        cats.push(cat);
-        const li = document.createElement('li');
-        li.textContent = `#${tokenId} `;
-        const btn = document.createElement('button');
-        btn.textContent = 'Remove';
-        btn.onclick = () => {
-            removeCat(cat, li);
-        };
-        li.appendChild(btn);
-        document.getElementById('catList').appendChild(li);
-        document.getElementById('sprite_sheet').src = cat.spriteSheet;
-    }
-
-    function removeCat(cat, li){
-        const idx = cats.indexOf(cat);
-        if(idx > -1) cats.splice(idx,1);
-        cat.remove();
-        if(li) li.remove();
-    }
+    animate();
 
     window.updateSpriteSheet = function(){
-        const tokenId = document.getElementById('newMooncatID').value;
-        if(tokenId === '') return;
-        addCat(parseInt(tokenId,10));
-    };
+        let tokenId = document.getElementById('mooncatID').value;
+
+        // Generate a MoonCat Walkcycle Sprite Sheet using the MoonCat TokenID (0-25439 - No need to use the MoonCat Hex ID format)
+        spriteSheet = MoonCatWalk.generateMoonCatSpriteSheet(tokenId, 1);
+        
+        document.getElementById('sprite_sheet').src = spriteSheet;
+    }
+
+
+    window.updateSpriteSheet();
 
     function animate(){
-        setInterval(() => {
-            cats.forEach(cat => cat.step());
+        let animation = document.getElementById('animation');
+        let walkIndex = 0;
+        let maxFrames = 8;
+        setInterval(()=>{
+            let x = walkIndex * 32;
+            let y = direction * 32;
+            if(direction == 0){
+                offsetX += speed;
+            } else if(direction == 1){
+                offsetY -= speed;
+            } else if(direction == 2){
+                offsetY += speed;
+            } else if(direction == 3){
+                offsetX -= speed;
+            }
+            if(offsetX < bounds.xMin){
+                offsetX = bounds.xMin;
+            } else if(offsetX > bounds.xMax){
+                offsetX = bounds.xMax;
+            } else if(offsetY < bounds.yMin){
+                offsetY = bounds.yMin;
+            } else if(offsetY > bounds.yMax){
+                offsetY = bounds.yMax;
+            }
+            if(jumping){
+                if(jumpCount > jumpLength){
+                    jumpInc = -2;
+                }
+                jumpCount += jumpInc;
+                if(jumpCount == 0){
+                    jumping = false;
+                    jumpInc = 2;
+                }
+            }
+            animation.style.backgroundPosition = `-${x}px -${y}px`;
+            animation.style.backgroundImage = "url('"+spriteSheet+"')";
+            animation.style.left = (offsetX) + 'px';
+            animation.style.top = (offsetY-jumpCount) + 'px';
+            
+            walkIndex++;
+            if(walkIndex >= maxFrames){
+                walkIndex = 0;
+            }
         },100);
     }
 
-    document.addEventListener('keydown', (e) => {
-        cats.forEach(cat => cat.handleKeyDown(e.which));
-    });
+    document.addEventListener("keydown", function(e) {
+        var key = e.which;
+        switch (key) {
+            case 39: // Right
+                direction = 0;
+                break;
 
-    document.addEventListener('keyup', (e) => {
-        cats.forEach(cat => cat.handleKeyUp(e.which));
-    });
+            case 38: // Up
+                direction = 1;
+                break;
 
-    animate();
+            case 40: // Down
+                direction = 2;
+                break;
+
+            case 37: //Left
+                direction = 3;
+                break;
+
+            case 32: //Jump / Space
+                jumping = true;
+                break;
+        }
+    })
+
+    document.addEventListener("keyup", function(e) {
+        var key = e.which;
+        switch (key) {
+            case 39: // Idle Right
+                direction = 4;
+                break;
+
+            case 38: // Idle Up
+                direction = 5;
+                break;
+
+            case 40: // Idle Down
+                direction = 6;
+                break;
+
+            case 37: // Idle Left
+                direction = 7;
+                break;
+        }
+    })
 }
 })();
